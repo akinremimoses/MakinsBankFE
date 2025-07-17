@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.landingimg {
+  background-image: url('./assets/womanbank.jpg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 300px; /* Fallback for mobile */
+  border-radius: 50px;
+}
+
+/* .landingpage {
+  background-color: rgb(212, 243, 231);
+}
+
+.landingimg {
+  background-image: url('./assets/womanbank.jpg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 300px; 
+  border-radius: 50px;
+}
+
+
+@media (min-width: 768px) {
+  .landingimg {
+    min-height: 60vh;
+    width: 50vw;
+  }
+} */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding-bottom: 60px; 
+}
+
+
+.bg-deposit {
+  background-color: #28a745 !important;
+}
+
+.bg-withdrawal {
+  background-color: #dc3545 !important;
+}
+
+.bg-transfer {
+  background-color: #17a2b8 !important;
+}
+
+.form-control:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+}
+
+
+@media (max-width: 768px) {
+  .transaction-table {
+    font-size: 0.9rem;
+  }
+}
+
