@@ -45,6 +45,7 @@ const Dashboard = () => {
 
         console.log(res.data)
         setCurrentUser(res.data);
+        localStorage.setItem('user', JSON.stringify(res.data))
       } catch (err) {
         console.error(err.response?.data?.message || 'Failed to fetch User');
       } finally {
@@ -117,9 +118,14 @@ const Dashboard = () => {
                             </span>
                           </td>
                           <td className={
-                            txn.type === 'withdrawal' ? 'text-danger' : 'text-success'
+                            txn.type === 'transfer'
+                              ? (txn.description?.toLowerCase().includes('received') ? 'text-success' : 'text-danger')
+                              : (txn.type === 'withdrawal' ? 'text-danger' : 'text-success')
                           }>
-                            {txn.type === 'withdrawal' ? '-' : '+'}${txn.amount.toFixed(2)}
+                            {txn.type === 'transfer'
+                              ? (txn.description?.toLowerCase().includes('received') ? '+' : '-')
+                              : (txn.type === 'withdrawal' ? '-' : '+')}
+                            ${txn.amount.toFixed(2)}
                           </td>
                           <td>{txn.description}</td>
                         </tr>

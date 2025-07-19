@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -6,7 +6,8 @@ import { FiDollarSign, FiFileText } from 'react-icons/fi';
 import axios from 'axios';
 
 const Withdraw = () => {
-  const { user, loadUser } = useContext(AuthContext);
+  let user = JSON.parse(localStorage.getItem('user'))
+  let token = localStorage.getItem('token')
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -31,17 +32,19 @@ const Withdraw = () => {
     setError('');
     setSuccess('');
     try {
-      await axios.post('http://localhost:5000/transactions/withdraw', {
+      await axios.post('http://localhost:5005/transactions/withdraw', {
         amount: parseFloat(values.amount),
         description: values.description
-      });
-      
-      // Refresh user data to get updated balance
-      await loadUser();
-      
+      },
+      {
+        headers:{
+          'Authorization':`Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
       setSuccess(`Successfully withdrew $${values.amount}`);
       resetForm();
-      
       // Redirect to dashboard after 2 seconds
       setTimeout(() => {
         navigate('/dashboard');
