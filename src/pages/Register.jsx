@@ -3,10 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FiUser, FiMail, FiLock } from 'react-icons/fi';
-import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
+
 
 const Register = () => {
-  const { register } = useContext(AuthContext);
+  // const { register } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,16 +31,24 @@ const Register = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     setIsLoading(true);
-    const result = await register({
-      name: values.name,
-      email: values.email,
-      password: values.password
-    });
+    console.log(values);
+    console.log(values.name, values.email, values.password);
+   const result = await axios.post('http://localhost:5005/auth/register', {
+    name: values.name,
+    email: values.email,
+    password: values.password
+    })
+  console.log(result);
+   
     setIsLoading(false);
     setSubmitting(false);
     
-    if (result.success) {
+    if (result.status === 200|| result.status===201) {
+      localStorage.setItem('token', result.data.token)
+      localStorage.setItem('user', JSON.stringify(result.data.user))
       navigate('/dashboard');
+    }else{
+      setIsLoading(false);
     }
   };
 

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FiMail, FiLock } from 'react-icons/fi';
-import { AuthContext } from '../context/AuthContext';
+
 import axios from 'axios';
 
 const Login = () => {
@@ -24,7 +24,7 @@ const Login = () => {
   const handleSubmit = async (values) => {
     console.log(values)
     setIsLoading(true);
-    const result = await axios.post('http://localhost:5000/auth/login', values)
+    const result = await axios.post('http://localhost:5005/auth/login', values)
     console.log(result.data)
 
     setIsLoading(false);
@@ -36,6 +36,7 @@ const Login = () => {
       localStorage.setItem('user', JSON.stringify(result.data.user));
       navigate('/dashboard');
     }else{
+      setIsLoading(false);
       console.log('error logging in')
     }
     // setSubmitting(false);

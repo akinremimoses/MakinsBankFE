@@ -1,12 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { AuthContext } from '../context/AuthContext';
+
 import axios from 'axios';
 
 const Transfer = () => {
-  const { user } = useContext(AuthContext);
+  let token = localStorage.getItem('token')
+  // Removed AuthContext and user dependency
+  let user = JSON.parse(localStorage.getItem('user'))
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -33,11 +35,18 @@ const Transfer = () => {
     setIsLoading(true);
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/transactions/transfer', {
+      const res = await axios.post('http://localhost:5005/transactions/transfer', {
         recipientAccount: values.recipientAccount,
         amount: parseFloat(values.amount),
         description: values.description
-      });
+      },
+      {
+        headers:{
+          'Authorization':`Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
       resetForm();
       navigate('/dashboard');
     } catch (err) {

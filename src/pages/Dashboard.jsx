@@ -1,19 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+
 import axios from 'axios';
 
 const Dashboard = () => {
-  const { user } = useContext(AuthContext);
+  // Removed AuthContext and user dependency
   const [transactions, setTransactions] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   let token = localStorage.getItem('token')
 
+  let user = JSON.parse(localStorage.getItem('user'))
+
   useEffect(() => {
     const fetchTransactions = async () => {
+      console.log(token);
       try {
-        const res = await axios.get('http://localhost:5000/transactions', {
+        const res = await axios.get('http://localhost:5005/transactions', {
           headers:{
             'Authorization':`Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -29,7 +33,28 @@ const Dashboard = () => {
       }
     };
 
+    const currentUser = async () => {
+      console.log(token);
+      try {
+        const res = await axios.get('http://localhost:5005/user', {
+          headers:{
+            'Authorization':`Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        console.log(res.data)
+        setCurrentUser(res.data);
+      } catch (err) {
+        console.error(err.response?.data?.message || 'Failed to fetch User');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    currentUser();
     fetchTransactions();
+
   }, []);
 
   return (
@@ -46,7 +71,7 @@ const Dashboard = () => {
               </div>
               <div className="mb-3">
                 <h5 className="text-muted">Account Balance</h5>
-                <h2 className="text-success">${user?.balance?.toFixed(2)}</h2>
+                <h2 className="text-success">${currentUser?.balance?.toFixed(2)}</h2>
               </div>
               <div className="d-grid gap-2">
                 <Link to="/transfer" className="btn btn-success">Transfer Money</Link>

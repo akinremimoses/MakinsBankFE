@@ -6,8 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Transfer from './pages/Transfer';
-import Withdraw from './pages/Withdraw';
-import AuthGuard from './components/AuthGuard'; // optional if you're using route protection
+import Withdraw from './pages/Withdraw';// optional if you're using route protection
 
 function App() {
   return (
