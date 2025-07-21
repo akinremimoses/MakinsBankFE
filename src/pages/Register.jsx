@@ -33,7 +33,7 @@ const Register = () => {
     setIsLoading(true);
     console.log(values);
     console.log(values.name, values.email, values.password);
-   const result = await axios.post('http://localhost:5005/auth/register', {
+   const result = await axios.post('https://makinsbankbe.onrender.com/auth/register', {
     name: values.name,
     email: values.email,
     password: values.password

@@ -35,7 +35,7 @@ const Transfer = () => {
     setIsLoading(true);
     setError('');
     try {
-      const res = await axios.post('http://localhost:5005/transactions/transfer', {
+      const res = await axios.post('https://makinsbankbe.onrender.com/transactions/transfer', {
         recipientAccount: values.recipientAccount,
         amount: parseFloat(values.amount),
         description: values.description

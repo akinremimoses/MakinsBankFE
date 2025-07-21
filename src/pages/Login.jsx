@@ -24,7 +24,7 @@ const Login = () => {
   const handleSubmit = async (values) => {
     console.log(values)
     setIsLoading(true);
-    const result = await axios.post('http://localhost:5005/auth/login', values)
+    const result = await axios.post('https://makinsbankbe.onrender.com/auth/login', values)
     console.log(result.data)
 
     setIsLoading(false);

@@ -17,7 +17,7 @@ const Dashboard = () => {
     const fetchTransactions = async () => {
       console.log(token);
       try {
-        const res = await axios.get('http://localhost:5005/transactions', {
+        const res = await axios.get('https://makinsbankbe.onrender.com/transactions', {
           headers:{
             'Authorization':`Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -36,7 +36,7 @@ const Dashboard = () => {
     const currentUser = async () => {
       console.log(token);
       try {
-        const res = await axios.get('http://localhost:5005/user', {
+        const res = await axios.get('https://makinsbankbe.onrender.com/user', {
           headers:{
             'Authorization':`Bearer ${token}`,
             'Content-Type': 'application/json'

@@ -32,7 +32,7 @@ const Withdraw = () => {
     setError('');
     setSuccess('');
     try {
-      await axios.post('http://localhost:5005/transactions/withdraw', {
+      await axios.post('https://makinsbankbe.onrender.com/transactions/withdraw', {
         amount: parseFloat(values.amount),
         description: values.description
       },
