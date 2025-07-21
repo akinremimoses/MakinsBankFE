@@ -34,6 +34,7 @@ const Login = () => {
     if (result.data.token) {
       localStorage.setItem('token', result.data.token);
       localStorage.setItem('user', JSON.stringify(result.data.user));
+      //made 
       navigate('/dashboard');
     }else{
       setIsLoading(false);
